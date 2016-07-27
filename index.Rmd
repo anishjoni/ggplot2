@@ -1,0 +1,64 @@
+---
+title: "A day with ggplot2"
+author: "Joni"
+date: "July 28, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r iris}
+#Load library
+library(data.table)
+library(ggplot2)
+library(gridExtra)
+DT <- data.table(iris)
+```
+
+```{r ,echo=FALSE}
+attach(DT)
+```
+
+##Data Exploration
+There are `r nrow(DT)` specimens of flowers belonging to `r levels(Species)`
+```{r iris dataset}
+head(DT)
+summary(DT)
+
+```
+
+
+## Including Plots
+
+You can also embed plots, for example:
+```{r qplot,echo=FALSE}
+qplot(x = Sepal.Length, y = Sepal.Width , data = DT, color = Species)
+```
+
+# Adding smooth geom
+```{r smooth geom, echo=FALSE}
+qplot(x = Sepal.Length, y = Sepal.Width , data = DT, geom = c("point","smooth"))
+```
+
+#Histogram of sepal length frequency 
+```{r histogram, echo=FALSE , results="hide"}
+qplot(Sepal.Length, data = DT, fill = Species)
+```
+
+
+#Scartterplots with facets
+```{r scatterplots with facets, echo=FALSE}
+par(mfrow=c(2,2))
+plot1 <- qplot(Sepal.Length,Sepal.Width, data = DT, facets = .~ Species,color = Species)
+plot2 <- qplot(Petal.Length,Petal.Width, data = DT, facets = .~ Species,color = Species)
+grid.arrange(plot1, plot2)
+
+```
