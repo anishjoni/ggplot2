@@ -3,4 +3,8 @@
 .RData
 .Ruserdata
 ggplot2.Rproj
-
+*.zip
+CPI2011_DataPackage
+CPI2011_Results.xls
+*.csv
+*.txt
