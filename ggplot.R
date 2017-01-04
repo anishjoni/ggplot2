@@ -183,3 +183,38 @@ g4$data <- data
 
 
 #Adding titile and formatting axes
+library(grid)
+g5 <- g4 +
+  scale_x_continuous(name = "Corruption Perceptions Index, 2011 (10=least corrupt)",
+                     limits = c(1,10),
+                     breaks = c(1:10)) +
+  scale_y_continuous(name = "Human development index, 2011 (1 = Best)",
+                     limits = c(.1,1.0),
+                     breaks = seq(.1,1, by = .1)) +
+  scale_color_manual(name = "",
+                     values = c("#24576D",
+                                "#099DD7",
+                                "#28AADC",
+                                "#248E84",
+                                "#F2583F",
+                                "#96503F"))+
+    ggtitle("Corruption and Human development")
+
+#Themes
+g6<- g5 +
+  theme_minimal() +
+  theme(text = element_text(color = "gray20"),
+        legend.position = c("top"),
+        legend.direction = "horizontal",
+        legend.justification = 0.1,
+        legend.text = element_text(size = 11,color = "gray10"),
+        axis.text = element_text(face = "italic"),
+        axis.title.x = element_text(vjust = -1),
+        axis.title.y = element_text(vjust = 2),
+        axis.ticks.y = element_blank(),
+        axis.line = element_line(color = "gray40", size = 0.5),
+        axis.line.y = element_blank(),
+        panel.grid.major = element_line(color = "gray50", size = 0.5),
+        panel.grid.major.x = element_blank()
+  )
+
