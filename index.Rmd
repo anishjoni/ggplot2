@@ -76,17 +76,17 @@ str(DT)
 head(DT)
 ```
 
-Basic Aesthetic Mapping:
+####Basic Aesthetic Mapping:
 ```{r}
 p <- ggplot(DT, aes(x= hp, y= mpg))
 ```
 
-Adding a geometic object( In this case, points)
+####Adding a geometic object( In this case, points)
 ```{r}
 p + geom_point()
 ```
 
-Smoothers
+####Smoothers
 ```{r}
 ggplot(DT, aes(mpg)) + geom_histogram(stat="bin", binwidth = 1)
 
@@ -95,7 +95,7 @@ p + geom_point() +geom_smooth(method = "auto")
 p + geom_point() +geom_smooth(span = .4)
 ```
 
-Scales- For controlling aesthetic mapping
+#### Scales- For controlling aesthetic mapping
 ```{r}
 p4 <- p3 +geom_point(aes(color = am),
                      alpha = 0.5,
@@ -108,7 +108,7 @@ p4 + scale_color_continuous(name = "Auto/Manual",
                          labels = c(0,1))
 ```
 
-#Change color to low and high value
+####Change color to low and high value
 
 ```{r}
 
