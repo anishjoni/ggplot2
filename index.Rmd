@@ -1,21 +1,11 @@
----
-title: "A day with ggplot2"
-author: "Joni"
-date: "July 28, 2016"
-output: html_document
----
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+##A day with ggplot2 and playing with R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r iris}
+```{r iris data}
 #Load library
 library(data.table)
 library(ggplot2)
@@ -23,13 +13,13 @@ library(gridExtra)
 DT <- data.table(iris)
 ```
 
-```{r ,echo=FALSE}
+```{r attaching data,echo=FALSE}
 attach(DT)
 ```
 
 ##Data Exploration
 There are `r nrow(DT)` specimens of flowers belonging to `r levels(Species)`
-```{r iris dataset}
+```{r iris EDA}
 head(DT)
 summary(DT)
 
@@ -63,4 +53,71 @@ grid.arrange(plot1, plot2)
 
 ```
 
-##The 'ggplot2'
+
+##Lets move on to 'The ggplot2'
+I chose ggplot2 because of its use of grammar of graphics and high level of flexiblity in plot specification.  
+
+###Grammar of graphics
+The basic idea of grammar of graphics is to independently specify plot building blocks and finally combine the blocks to get the desired graphs and plots you want. Also, the 
+Building blocks include:
+
+* data
+* aesthetic mapping
+* geometric object
++ statistical transformations
+* scales
+* coordinate system
+* position adjustments
+* faceting
+
+####Let's get to the data
+```{r}
+str(DT)
+head(DT)
+```
+
+Basic Aesthetic Mapping:
+```{r}
+p <- ggplot(DT, aes(x= hp, y= mpg))
+```
+
+Adding a geometic object( In this case, points)
+```{r}
+p + geom_point()
+```
+
+Smoothers
+```{r}
+ggplot(DT, aes(mpg)) + geom_histogram(stat="bin", binwidth = 1)
+
+p + geom_point() +geom_smooth(method = "lm")
+p + geom_point() +geom_smooth(method = "auto")
+p + geom_point() +geom_smooth(span = .4)
+```
+
+Scales- For controlling aesthetic mapping
+```{r}
+p4 <- p3 +geom_point(aes(color = am),
+                     alpha = 0.5,
+                     size = 1.5,
+                     position = position_jitter(width = 0.25, height = 0))
+```
+```{r}
+p4 + scale_color_continuous(name = "Auto/Manual",
+                         breaks = c(0.0,1.0),
+                         labels = c(0,1))
+```
+
+#Change color to low and high value
+
+```{r}
+
+p4 + scale_color_continuous(name = "Auto/Manual",
+                            breaks = c(0.0,1.0),
+                            labels = c(0,1),
+                            low = "red",
+                            high = "green")
+```
+
+
+
